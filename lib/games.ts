@@ -16,4 +16,12 @@ export const games: Game[] = [
     emoji: "⏳",
     status: "live",
   },
+  {
+    id: "how-many-fit",
+    slug: "how-many-fit",
+    title: "How Many Fit?",
+    tagline: "Tennis balls in a 747. Earths in the Sun. Guess the number.",
+    emoji: "📦",
+    status: "live",
+  },
 ];
