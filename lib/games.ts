@@ -24,4 +24,12 @@ export const games: Game[] = [
     emoji: "📦",
     status: "live",
   },
+  {
+    id: "temple-dash",
+    slug: "temple-dash",
+    title: "Temple Dash",
+    tagline: "Run through ancient ruins. Dodge, jump, slide. Don't die.",
+    emoji: "🏛️",
+    status: "live",
+  },
 ];
