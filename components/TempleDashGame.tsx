@@ -194,13 +194,16 @@ function drawObstacle(ctx: CanvasRenderingContext2D, o: Obstacle) {
 }
 
 function drawCoin(ctx: CanvasRenderingContext2D, c: Coin, frame: number) {
-  const x = pX(c.lane, c.z), gy = pY(c.z), s = c.z;
+  const s = c.z;
+  if (s <= 0) return; // not yet in view — skip to avoid negative-radius crash
+  const x = pX(c.lane, s), gy = pY(s);
   const bob = Math.sin(frame * 0.12 + c.id * 1.3) * 3 * s;
   const cy = gy - 38 * s + bob;
-  const r = 9 * s;
+  const r = Math.max(0.5, 9 * s);
 
   // glow
-  const grd = ctx.createRadialGradient(x, cy, 0, x, cy, r * 2.5);
+  const glowR = Math.max(1, r * 2.5);
+  const grd = ctx.createRadialGradient(x, cy, 0, x, cy, glowR);
   grd.addColorStop(0, "rgba(251,191,36,0.35)");
   grd.addColorStop(1, "rgba(251,191,36,0)");
   ctx.fillStyle = grd;
@@ -453,7 +456,7 @@ export default function TempleDashGame() {
       if (g.coinTimer <= 0) {
         const lane = Math.floor(Math.random() * 3);
         for (let i = 0; i < 3; i++) {
-          g.coins.push({ id: g.uid++, lane, z: 0.04 - i * 0.055, taken: false });
+          g.coins.push({ id: g.uid++, lane, z: 0.04 + i * 0.055, taken: false });
         }
         g.coinTimer = 50 + Math.random() * 35;
       }
